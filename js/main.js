@@ -348,3 +348,45 @@ if (document.readyState === 'loading') {
 } else {
     initAsyncContent();
 }
+
+// Contact form submission handler
+const contactForm = document.querySelector('#contact-form');
+const formStatus = document.querySelector('#form-status');
+
+contactForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!formStatus) return;
+
+    // Clear previous status
+    formStatus.textContent = '';
+    formStatus.className = 'form-status loading';
+
+    // Get form data
+    const formData = new FormData(contactForm);
+
+    // Show loading state
+    formStatus.textContent = 'Sending message...';
+
+    try {
+        const response = await fetch('php/sendEmail.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            formStatus.className = 'form-status success';
+            formStatus.textContent = result.message;
+            contactForm.reset();
+        } else {
+            formStatus.className = 'form-status error';
+            formStatus.textContent = result.message || 'Failed to send message. Please try again.';
+        }
+    } catch (error) {
+        formStatus.className = 'form-status error';
+        formStatus.textContent = 'Network error. Please check your connection and try again.';
+        console.error('Form submission error:', error);
+    }
+});

@@ -954,7 +954,7 @@ GitHub Pages cannot run the current PHP files or connect to MySQL, so it remains
 6. Remove or explicitly classify reference-only artifacts before publishing. Java source files remain as references, while compiled `.class` and `.jar` outputs are excluded because PHP is the runnable Playground layer.
 7. Check the repository for secrets and personal data before staging.
 
-**Progress:** Environment-aware database configuration, `.gitignore`, `.env.example`, and the initial deployment README are now prepared locally. No GitHub repository or Azure resource has been created yet.
+**Progress:** Environment-aware database configuration, `.gitignore`, `.env.example`, and the initial deployment README are prepared locally. The GitHub repository is published at `https://github.com/Sigfreedz/sigfrid-portfolio`; Azure resources and automatic deployment are not configured yet.
 
 ### Verify
 
@@ -989,6 +989,29 @@ Do not create the first public commit until the secret scan is clean and the pro
 ### Decision gate K
 
 The repository is ready for deployment only when a clean clone can be configured without copying hidden files or manually editing source code.
+
+## Loop K.1 — Connect GitHub updates to Azure deployment
+
+### Build
+
+1. Use Azure App Service **Deployment Center** with GitHub as the source, or configure the equivalent GitHub Actions workflow from the App Service.
+2. Authorize Azure to access `Sigfreedz/sigfrid-portfolio`.
+3. Select the `main` branch and have Azure create the deployment workflow in `.github/workflows/`.
+4. Keep production database settings in App Service **Environment variables/Application settings**. The workflow must deploy source files only and must never contain database passwords.
+5. Treat pushes to `main` as production deployments. Use pull requests and branch protection for changes that should be reviewed before deployment.
+6. Confirm the workflow reports a successful deployment and that the App Service restart does not remove persistent database data.
+
+### Verify
+
+- The GitHub repository contains the generated Azure deployment workflow.
+- A controlled commit to `main` triggers one workflow run.
+- The workflow completes successfully and the App Service serves the new commit.
+- A failed deployment is visible in GitHub Actions and App Service deployment logs.
+- Database credentials remain absent from Git history, workflow YAML, and build logs.
+
+### Decision gate K.1
+
+Do not treat the Azure site as production-ready until a harmless visible change has been deployed from GitHub by the workflow and the prior version can be restored through Git history or a redeploy.
 
 ## Loop L — Provision Azure without introducing billing risk
 

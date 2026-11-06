@@ -1079,3 +1079,30 @@ Publish the domain only after the clean-clone, production smoke test, Playwright
 7. Configure HTTPS, backups, and controlled GitHub deployment.
 8. Run production Playwright verification.
 9. Add the final deployed URL to the GitHub repository metadata and portfolio.
+
+## Note: PLV university tenant restrictions
+
+The `@plv.edu.ph` Azure for Students subscription has institutional policies that zero out App Service quotas (both Free F1 and Basic B1) in all regions including Southeast Asia. Only Azure VM resources are permitted by the tenant policy.
+
+**Resolution chosen:** Use a personal Microsoft/email account to create a separate Azure free account.
+
+- Personal Azure free account: $200 credits for 30 days + 12 months of free services
+- Requires a personal email (not @plv.edu.ph), phone number, and a debit/credit card for identity verification (no charges during free trial)
+- Sign up at: https://azure.microsoft.com/en-us/free/
+- No App Service quota restrictions on personal accounts
+- Free F1 App Service + MySQL Flexible Server Burstable tier covered by free credits
+
+**Resource group already created** (`sigfrid-portfolio-rg`) in the university subscription — it can be deleted or ignored. All new resources will be created in the personal subscription after sign-up.
+
+### Post-signup provisioning sequence (personal account)
+
+1. Sign in to Azure portal with personal account.
+2. Create resource group: `sigfrid-portfolio-rg`, region: Southeast Asia.
+3. Create App Service plan: `sigfrid-portfolio-plan`, Free F1, Linux, Southeast Asia.
+4. Create Web App: `sigfrid-portfolio`, PHP 8.2, Linux, Southeast Asia.
+5. Create Azure Database for MySQL Flexible Server: `sigfrid-portfolio-db`, Burstable B1ms, Southeast Asia.
+6. Set App Service Application settings: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASS`, `DB_SSL_VERIFY`.
+7. Import `database/portfolio.sql` into the Azure MySQL instance.
+8. Connect App Service Deployment Center to GitHub `Sigfreedz/sigfrid-portfolio`, branch `main`.
+9. Fix web root (app serves from `/` on Azure, not `/portfolio/` as on XAMPP).
+10. Verify live site with Playwright smoke tests.

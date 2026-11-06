@@ -1106,3 +1106,39 @@ The `@plv.edu.ph` Azure for Students subscription has institutional policies tha
 8. Connect App Service Deployment Center to GitHub `Sigfreedz/sigfrid-portfolio`, branch `main`.
 9. Fix web root (app serves from `/` on Azure, not `/portfolio/` as on XAMPP).
 10. Verify live site with Playwright smoke tests.
+
+## InfinityFree deployment route
+
+The Azure App Service route is blocked by the university tenant's App Service quota policy, and a second personal Azure account is not being created. The selected no-cost deployment target is InfinityFree.
+
+### InfinityFree configuration
+
+- Site: `sigfrid.freehosting.dev`
+- FTP host: `ftpupload.net`
+- MySQL host: `sql105.infinityfree.com`
+- Database: `if0_43239970_sigfrid_portfolio`
+- Database user: `if0_43239970`
+- Credentials: supplied privately by the owner; never commit them
+
+### Build
+
+1. Keep the GitHub source free of hosting passwords. The committed `php/db.php` remains environment-aware and local-safe.
+2. Create a temporary production-only `php/db.php` for the InfinityFree upload with the hosting database values, then remove the local temporary file after upload.
+3. Upload the application files into the InfinityFree `htdocs/` directory using FTP. Do not upload `.git/`, compiled Java artifacts, local environment files, or deployment scripts.
+4. Import `database/portfolio.sql` into the InfinityFree database through a short-lived protected importer or the hosting phpMyAdmin interface. Delete any importer immediately after use.
+5. Confirm the hosting root serves `index.php` at `https://sigfrid.freehosting.dev/`, not under `/portfolio/`.
+6. Configure HTTPS in the InfinityFree panel and confirm the site redirects from HTTP when the provider supports the redirect.
+
+### Verify with Playwright
+
+- Homepage, CSS, JavaScript, images, and favicon load from the site root.
+- Skills, Stack, Radar, and Projects resolve from the remote database.
+- Navbar Playground and More projects both reach `playground.php`.
+- Playground Deal/Draw/Stand flow completes.
+- Light/dark theme persistence works.
+- Mobile viewport has no horizontal overflow.
+- No PHP warnings, database errors, broken image paths, or exposed installer/configuration files are present.
+
+### Decision gate InfinityFree
+
+Do not announce the hosted URL as complete until the schema is imported, the database-backed sections return populated data, the temporary importer is deleted, and the production Playwright smoke test passes. Rotate the hosting password after deployment because it was shared during setup.

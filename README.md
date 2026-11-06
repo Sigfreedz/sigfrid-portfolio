@@ -13,7 +13,7 @@ The Playground is available at `http://localhost/portfolio/playground.php`.
 
 ## Deployment target
 
-The production target is Azure App Service on Linux with Azure Database for MySQL Flexible Server. GitHub is the source repository and deployment trigger. Production database values must be configured as Azure App Service Application settings, not committed to this repository:
+The current deployment target is InfinityFree shared hosting with its MySQL-compatible database. GitHub remains the source repository, while deployment is performed through FTP because InfinityFree does not provide the Azure-style GitHub Actions integration. Production database values must never be committed to this repository:
 
 - `DB_HOST`
 - `DB_PORT`
@@ -23,7 +23,7 @@ The production target is Azure App Service on Linux with Azure Database for MySQ
 - `DB_SSL_CA` (when required by the selected Azure MySQL configuration)
 - `DB_SSL_VERIFY`
 
-See [`plan.md`](plan.md) for the repository, Azure provisioning, deployment, and verification gates.
+See [`plan.md`](plan.md) for the repository, InfinityFree deployment, and verification gates.
 
 ## Validation
 

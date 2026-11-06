@@ -1,0 +1,27 @@
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local development tools
+.vscode/
+.idea/
+*.log
+Thumbs.db
+desktop.ini
+
+# XAMPP/MariaDB local artifacts
+*.sql.bak
+mysql/
+mariadb/
+
+# OS and generated files
+.DS_Store
+*.tmp
+*.cache
+
+# Reference build outputs
+*.class
+*.jar

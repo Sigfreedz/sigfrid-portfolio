@@ -1129,6 +1129,19 @@ The Azure App Service route is blocked by the university tenant's App Service qu
 5. Confirm the hosting root serves `index.php` at `https://sigfrid.freehosting.dev/`, not under `/portfolio/`.
 6. Configure HTTPS in the InfinityFree panel and confirm the site redirects from HTTP when the provider supports the redirect.
 
+**MySQL Import (Manual - Required):**
+Due to SSL handshake errors and anti-bot challenges blocking programmatic import, complete schema upload via phpMyAdmin:
+
+1. Log in to InfinityFree control panel at https://www.infinityfree.com/
+2. Navigate to MySQL Databases → Open phpMyAdmin
+3. Select database `if0_43239970_sigfrid_portfolio`
+4. Click Import tab → Choose File → Select `database/portfolio.sql`
+5. Click Go to execute import
+6. Verify three tables created: `skills`, `projects`, `skill_radar`
+7. Browse each table to confirm data is populated
+
+**Status:** Files uploaded via FTP ✅ | Database schema pending manual import ⏳
+
 ### Verify with Playwright
 
 - Homepage, CSS, JavaScript, images, and favicon load from the site root.

@@ -1,10 +1,15 @@
 <?php
-// php/db.php — environment-aware PDO connection for local XAMPP and Azure App Service.
-$host = getenv('DB_HOST') ?: '127.0.0.1';
-$port = getenv('DB_PORT') ?: '3306';
-$db   = getenv('DB_NAME') ?: 'sigfrid_portfolio';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: '';
+// php/db.php — environment-aware PDO connection
+
+if (file_exists(__DIR__ . '/db_config.php')) {
+    require_once __DIR__ . '/db_config.php';
+}
+
+$host = defined('DB_HOST') ? DB_HOST : (getenv('DB_HOST') ?: '127.0.0.1');
+$port = defined('DB_PORT') ? DB_PORT : (getenv('DB_PORT') ?: '3306');
+$db   = defined('DB_NAME') ? DB_NAME : (getenv('DB_NAME') ?: 'sigfrid_portfolio');
+$user = defined('DB_USER') ? DB_USER : (getenv('DB_USER') ?: 'root');
+$pass = defined('DB_PASS') ? DB_PASS : (getenv('DB_PASS') ?: '');
 $sslCa = getenv('DB_SSL_CA') ?: '';
 $sslVerify = filter_var(getenv('DB_SSL_VERIFY') ?: 'true', FILTER_VALIDATE_BOOLEAN);
 

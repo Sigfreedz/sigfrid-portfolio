@@ -5,6 +5,8 @@
 *.pem
 *.key
 php/config.php
+php/db_config.php
+plan.md
 
 # Local development tools
 .vscode/

@@ -14,10 +14,16 @@ Personal portfolio and Playground built with PHP, MySQL, JavaScript, and CSS.
 
 ## Local Development
 
-1. Start Apache and MySQL/MariaDB in XAMPP.
-2. Create the `sigfrid_portfolio` database and import [`database/portfolio.sql`](database/portfolio.sql).
-3. Copy `.env.example` to `.env` for reference. XAMPP currently uses the local defaults in [`php/db.php`](php/db.php); the application does not load `.env` automatically.
-4. Open `http://localhost/portfolio/`.
+1. **Prerequisites**: Install XAMPP (Apache & PHP 8.2+).
+2. **Database Setup**:
+   - You can connect locally using XAMPP MySQL (`127.0.0.1`, root, no password, database `sigfrid_portfolio`) and import [`database/portfolio.sql`](database/portfolio.sql).
+   - Alternatively, you can configure your local version to connect directly to your InfinityFree MySQL server by updating [`php/db.php`](php/db.php) or setting environment variables (`DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`).
+3. **Configuration**:
+   - For contact form emailing via SendGrid, copy [`php/config.php.example`](php/config.php.example) to `php/config.php` and add your SendGrid API key.
+4. **Running**:
+   - Place project files in `C:\xampp\htdocs\portfolio\` (or your local web root).
+   - Start Apache in XAMPP control panel.
+   - Open `http://localhost/portfolio/` in your browser.
 
 The Playground is available at `http://localhost/portfolio/playground.php`.
 
@@ -34,12 +40,10 @@ The site is deployed via FTP to InfinityFree shared hosting. GitHub remains the 
 - `DB_PASS`
 
 **Deployment Steps:**
-1. Upload runtime files via FTP to `htdocs/` (excludes `.git/`, `database/`, Java source files)
-2. Update `php/db.php` with production database credentials
+1. Upload runtime files via FTP to `htdocs/` (excludes `.git/`, `database/`, Java source files, `plan.md`)
+2. Update `php/db.php` or `php/config.php` with production database/API credentials
 3. Import `database/portfolio.sql` via phpMyAdmin in InfinityFree control panel
 4. Verify all endpoints return data: `/php/getSkills.php`, `/php/getStack.php`, `/php/getRadar.php`, `/php/getProjects.php`
-
-See [`plan.md`](plan.md) for detailed deployment history and verification checklist.
 
 ## Project Structure
 

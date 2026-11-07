@@ -4,6 +4,7 @@
 !.env.example
 *.pem
 *.key
+php/config.php
 
 # Local development tools
 .vscode/

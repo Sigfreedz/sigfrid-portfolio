@@ -1,0 +1,7 @@
+<?php
+// php/config.php.example
+// Copy this file to config.php and set your actual API key
+
+// SendGrid API Key
+// Get your API key from https://app.sendgrid.com/settings/api_keys
+define('SENDGRID_API_KEY', 'your-sendgrid-api-key-here');
